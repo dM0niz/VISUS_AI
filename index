@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>VISUS AI Navigation</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial, Helvetica, sans-serif;
+    background:#061321;
+    color:white;
+    overflow-x:hidden;
+}
+
+.hero{
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+}
+
+.logo{
+    width:280px;
+    max-width:80%;
+    margin-bottom:30px;
+    z-index:10;
+}
+
+h1{
+    font-size:4rem;
+    letter-spacing:4px;
+    margin-bottom:15px;
+    z-index:10;
+}
+
+.tagline{
+    font-size:1.4rem;
+    color:#8bc6ff;
+    margin-bottom:25px;
+    z-index:10;
+}
+
+.description{
+    max-width:700px;
+    line-height:1.7;
+    font-size:1.1rem;
+    padding:0 20px;
+    z-index:10;
+}
+
+.download-btn{
+    margin-top:40px;
+    padding:18px 40px;
+    background:#008cff;
+    color:white;
+    text-decoration:none;
+    border-radius:40px;
+    font-size:1.1rem;
+    transition:0.3s;
+    z-index:10;
+}
+
+.download-btn:hover{
+    transform:scale(1.05);
+}
+
+.beam{
+    position:absolute;
+    width:900px;
+    height:180px;
+
+    background:linear-gradient(
+        90deg,
+        rgba(180,220,255,0.45),
+        rgba(180,220,255,0.05),
+        transparent
+    );
+
+    top:38%;
+    left:50%;
+    transform-origin:left center;
+
+    animation:sweep 10s ease-in-out infinite;
+    filter:blur(12px);
+}
+
+@keyframes sweep{
+
+0%{
+transform:rotate(-18deg);
+}
+
+50%{
+transform:rotate(18deg);
+}
+
+100%{
+transform:rotate(-18deg);
+}
+
+}
+
+.features{
+    padding:100px 20px;
+    text-align:center;
+    background:#081a2c;
+}
+
+.features h2{
+    margin-bottom:60px;
+    font-size:2.2rem;
+}
+
+.cards{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:30px;
+}
+
+.card{
+    width:300px;
+    padding:35px;
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:18px;
+    background:rgba(255,255,255,0.03);
+}
+
+.card h3{
+    margin-bottom:15px;
+}
+
+.roadmap{
+    text-align:center;
+    padding:100px 20px;
+}
+
+.roadmap h2{
+    margin-bottom:30px;
+}
+
+.roadmap ul{
+    list-style:none;
+    line-height:2;
+}
+
+footer{
+    padding:40px;
+    text-align:center;
+    border-top:1px solid rgba(255,255,255,0.08);
+    color:#8aa7c0;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<section class="hero">
+
+<div class="beam"></div>
+
+<img src="visus-logo.png" class="logo">
+
+<h1>VISUS AI</h1>
+
+<p class="tagline">
+Helping Skippers See Beyond The Horizon
+</p>
+
+<p class="description">
+VISUS AI is an intelligent maritime navigation platform designed to enhance situational awareness and decision-making through advanced artificial intelligence models.
+</p>
+
+<a href="#" class="download-btn">
+Download App
+</a>
+
+</section>
+
+<section class="features">
+
+<h2>Navigation Intelligence</h2>
+
+<div class="cards">
+
+<div class="card">
+<h3>AI Navigation</h3>
+<p>
+Advanced navigation assistance powered by artificial intelligence.
+</p>
+</div>
+
+<div class="card">
+<h3>Intelligent Models</h3>
+<p>
+Marine intelligence models designed to improve route awareness.
+</p>
+</div>
+
+<div class="card">
+<h3>Situational Awareness</h3>
+<p>
+Helping mariners make safer and smarter decisions at sea.
+</p>
+</div>
+
+</div>
+
+</section>
+
+<section class="roadmap">
+
+<h2>Roadmap</h2>
+
+<ul>
+<li>✓ VISUS AI Navigation</li>
+<li>✓ AI Maritime Models</li>
+<li>⟳ Computer Vision Integration</li>
+<li>⟳ VISUS AI Pro</li>
+<li>⟳ Advanced Maritime Intelligence</li>
+</ul>
+
+</section>
+
+<footer>
+
+Powered by FrontSea Intelligence
+
+</footer>
+
+</body>
+</html>
