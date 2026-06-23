@@ -306,43 +306,43 @@ const stars = [
 
 stars.forEach((s,i)=>{
 
-    const star=document.createElement('div');
+const star=document.createElement('div');
 
-    star.className='star';
+star.className='star';
 
-    star.style.left=s.x+'vw';
-    star.style.top=s.y+'vh';
+star.style.left=s.x+'vw';
+star.style.top=s.y+'vh';
 
-    star.style.animationDelay=
-        (Math.random()*5)+'s';
+star.style.animationDelay=
+    (Math.random()*5)+'s';
 
-    container.appendChild(star);
+container.appendChild(star);
 
-    if(i<stars.length-1){
+if(i<stars.length-1){
 
-        const next=stars[i+1];
+    const next=stars[i+1];
 
-        const dx=(next.x-s.x);
-        const dy=(next.y-s.y);
+    const dx=(next.x-s.x);
+    const dy=(next.y-s.y);
 
-        const length=Math.sqrt(dx*dx+dy*dy);
+    const length=Math.sqrt(dx*dx+dy*dy);
 
-        const angle=
-            Math.atan2(dy,dx)*180/Math.PI;
+    const angle=
+        Math.atan2(dy,dx)*180/Math.PI;
 
-        const line=document.createElement('div');
+    const line=document.createElement('div');
 
-        line.className='line';
+    line.className='line';
 
-        line.style.left=s.x+'vw';
-        line.style.top=s.y+'vh';
+    line.style.left=s.x+'vw';
+    line.style.top=s.y+'vh';
 
-        line.style.width=length+'vw';
+    line.style.width=length+'vw';
 
-        line.style.transform=
-            `rotate(${angle}deg)`;
+    line.style.transform=
+        `rotate(${angle}deg)`;
 
-        container.appendChild(line);
+    container.appendChild(line);
 
     }
 
