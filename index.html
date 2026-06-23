@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>VISUS AI Navigation</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 
 <style>
 
@@ -16,9 +17,9 @@
 }
 
 body{
-    font-family:Arial, Helvetica, sans-serif;
-    background:#061321;
+    background:#030814;
     color:white;
+    font-family:'Inter',sans-serif;
     overflow-x:hidden;
 }
 
@@ -30,218 +31,210 @@ body{
     align-items:center;
     text-align:center;
     position:relative;
-    overflow:hidden;
+    padding:40px 20px;
+}
+
+.logo-wrapper{
+    position:relative;
+    display:inline-block;
+    margin-bottom:40px;
 }
 
 .logo{
-    width:280px;
-    max-width:80%;
-    margin-bottom:30px;
-    z-index:10;
+    width:min(750px,90vw);
+    display:block;
 }
 
-h1{
-    font-size:4rem;
-    letter-spacing:4px;
-    margin-bottom:15px;
-    z-index:10;
-}
-
-.tagline{
-    font-size:1.4rem;
-    color:#8bc6ff;
-    margin-bottom:25px;
-    z-index:10;
-}
-
-.description{
-    max-width:700px;
-    line-height:1.7;
-    font-size:1.1rem;
-    padding:0 20px;
-    z-index:10;
-}
-
-.download-btn{
-    margin-top:40px;
-    padding:18px 40px;
-    background:#008cff;
-    color:white;
-    text-decoration:none;
-    border-radius:40px;
-    font-size:1.1rem;
-    transition:0.3s;
-    z-index:10;
-}
-
-.download-btn:hover{
-    transform:scale(1.05);
-}
+/* FEIXE DE LUZ */
 
 .beam{
     position:absolute;
-    width:900px;
-    height:180px;
+
+    top:19%;
+    left:54%;
+
+    width:320px;
+    height:45px;
 
     background:linear-gradient(
         90deg,
-        rgba(180,220,255,0.45),
-        rgba(180,220,255,0.05),
-        transparent
+        rgba(255,255,255,0.8),
+        rgba(180,220,255,0.25),
+        rgba(180,220,255,0)
     );
 
-    top:38%;
-    left:50%;
+    filter:blur(6px);
+
     transform-origin:left center;
 
-    animation:sweep 10s ease-in-out infinite;
-    filter:blur(12px);
+    animation:sweep 8s ease-in-out infinite;
+
+    pointer-events:none;
 }
 
 @keyframes sweep{
 
 0%{
-transform:rotate(-18deg);
+    transform:rotate(-7deg);
 }
 
 50%{
-transform:rotate(18deg);
+    transform:rotate(7deg);
 }
 
 100%{
-transform:rotate(-18deg);
+    transform:rotate(-7deg);
 }
 
+}
+
+.tagline{
+    font-family:'Cinzel',serif;
+    font-size:clamp(1.3rem,2vw,2rem);
+    letter-spacing:2px;
+    color:#c8d9ff;
+    margin-bottom:25px;
+}
+
+.description{
+    max-width:700px;
+    line-height:1.8;
+    color:#d0d8e6;
+    margin-bottom:40px;
+    font-size:1.05rem;
+}
+
+.buttons{
+    display:flex;
+    gap:20px;
+    flex-wrap:wrap;
+    justify-content:center;
+}
+
+.btn{
+    text-decoration:none;
+    padding:16px 34px;
+    border-radius:40px;
+    transition:0.3s;
+    font-weight:500;
+}
+
+.primary{
+    background:#3a8dff;
+    color:white;
+}
+
+.secondary{
+    border:1px solid rgba(255,255,255,0.2);
+    color:white;
+}
+
+.btn:hover{
+    transform:translateY(-2px);
+}
+
+.info{
+    max-width:1000px;
+    margin:auto;
+    padding:100px 30px;
+}
+
+.info h2{
+    font-family:'Cinzel',serif;
+    margin-bottom:30px;
+    text-align:center;
+    letter-spacing:2px;
 }
 
 .features{
-    padding:100px 20px;
-    text-align:center;
-    background:#081a2c;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:25px;
 }
 
-.features h2{
-    margin-bottom:60px;
-    font-size:2.2rem;
-}
-
-.cards{
-    display:flex;
-    justify-content:center;
-    flex-wrap:wrap;
-    gap:30px;
-}
-
-.card{
-    width:300px;
-    padding:35px;
+.feature{
+    padding:30px;
     border:1px solid rgba(255,255,255,0.08);
     border-radius:18px;
-    background:rgba(255,255,255,0.03);
+    background:rgba(255,255,255,0.02);
 }
 
-.card h3{
+.feature h3{
     margin-bottom:15px;
-}
-
-.roadmap{
-    text-align:center;
-    padding:100px 20px;
-}
-
-.roadmap h2{
-    margin-bottom:30px;
-}
-
-.roadmap ul{
-    list-style:none;
-    line-height:2;
+    color:#9dc3ff;
 }
 
 footer{
-    padding:40px;
     text-align:center;
-    border-top:1px solid rgba(255,255,255,0.08);
-    color:#8aa7c0;
+    padding:40px;
+    color:#7c8ba7;
+    border-top:1px solid rgba(255,255,255,0.06);
 }
 
 </style>
-
 </head>
 
 <body>
 
 <section class="hero">
 
+<div class="logo-wrapper">
+
+<img src="visus-logo.png" class="logo" alt="VISUS AI">
+
 <div class="beam"></div>
 
-<img src="visus-logo.png" class="logo">
+</div>
 
-<h1>VISUS AI</h1>
-
-<p class="tagline">
+<div class="tagline">
 Helping Skippers See Beyond The Horizon
-</p>
+</div>
 
-<p class="description">
+<div class="description">
 VISUS AI is an intelligent maritime navigation platform designed to enhance situational awareness and decision-making through advanced artificial intelligence models.
-</p>
+</div>
 
-<a href="#" class="download-btn">
-Download App
+<div class="buttons">
+
+<a href="VISUS.apk" class="btn primary">
+Download Android APK
 </a>
+
+<a href="https://app.visusainav.com" class="btn secondary">
+Launch Web App
+</a>
+
+</div>
 
 </section>
 
-<section class="features">
+<section class="info">
 
 <h2>Navigation Intelligence</h2>
 
-<div class="cards">
+<div class="features">
 
-<div class="card">
+<div class="feature">
 <h3>AI Navigation</h3>
-<p>
-Advanced navigation assistance powered by artificial intelligence.
-</p>
+<p>Advanced navigation assistance powered by artificial intelligence.</p>
 </div>
 
-<div class="card">
+<div class="feature">
 <h3>Intelligent Models</h3>
-<p>
-Marine intelligence models designed to improve route awareness.
-</p>
+<p>AI models designed to improve route awareness and support decision-making.</p>
 </div>
 
-<div class="card">
+<div class="feature">
 <h3>Situational Awareness</h3>
-<p>
-Helping mariners make safer and smarter decisions at sea.
-</p>
+<p>Helping mariners make safer and smarter decisions at sea.</p>
 </div>
 
 </div>
-
-</section>
-
-<section class="roadmap">
-
-<h2>Roadmap</h2>
-
-<ul>
-<li>✓ VISUS AI Navigation</li>
-<li>✓ AI Maritime Models</li>
-<li>⟳ Computer Vision Integration</li>
-<li>⟳ VISUS AI Pro</li>
-<li>⟳ Advanced Maritime Intelligence</li>
-</ul>
 
 </section>
 
 <footer>
-
 Powered by FrontSea Intelligence
-
 </footer>
 
 </body>
