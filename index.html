@@ -213,6 +213,59 @@ footer{
     color:#7c8ba7;
     border-top:1px solid rgba(255,255,255,0.06);
 }
+    
+.roadmap{
+    max-width:1000px;
+    margin:80px auto;
+    padding:20px;
+}
+
+.roadmap-title{
+    text-align:center;
+    font-family:'Cinzel', serif;
+    font-size:2rem;
+    margin-bottom:50px;
+    letter-spacing:3px;
+}
+
+.timeline{
+    display:flex;
+    justify-content:space-between;
+    position:relative;
+    margin-top:40px;
+}
+
+.timeline::before{
+    content:'';
+    position:absolute;
+    top:20px;
+    left:5%;
+    width:90%;
+    height:2px;
+    background:rgba(255,255,255,0.15);
+}
+
+.step{
+    position:relative;
+    text-align:center;
+    width:20%;
+}
+
+.circle{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    margin:auto;
+    margin-bottom:15px;
+    border:2px solid #4da3ff;
+    background:#02101d;
+}
+
+.done{
+    background:#4da3ff;
+    box-shadow:0 0 15px rgba(77,163,255,0.8);
+}
+
 
 </style>
 </head>
@@ -272,9 +325,49 @@ Launch Web App
 <p>Helping mariners make safer and smarter decisions at sea.</p>
 </div>
 
+<section class="roadmap">
+
+<h2 class="roadmap-title">
+ROADMAP
+</h2>
+
+<div class="timeline">
+
+<div class="step">
+<div class="circle done"></div>
+<p>VISUS AI Navigation</p>
+</div>
+
+<div class="step">
+<div class="circle done"></div>
+<p>AI Maritime Models</p>
+</div>
+
+<div class="step">
+<div class="circle"></div>
+<p>Computer Vision</p>
+</div>
+
+<div class="step">
+<div class="circle"></div>
+<p>VISUS AI Pro</p>
+</div>
+
+<div class="step">
+<div class="circle"></div>
+<p>Advanced Maritime Intelligence</p>
+</div>
+
 </div>
 
 </section>
+
+</div>
+
+
+
+</section>
+
 
 <footer>
 Powered by FrontSea Intelligence
