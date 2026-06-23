@@ -269,24 +269,27 @@ footer{
     text-align:center;
     font-family:'Cinzel', serif;
     font-size:2rem;
-    margin-bottom:50px;
+    margin-bottom:80px;
     letter-spacing:3px;
 }
 
 .timeline{
     display:flex;
     justify-content:center;
-    gap:90px;
-    position:center;
+    align-items:flex-start;
+    gap:100px;
+    margin:60px auto;
+    position:relative;
     margin-top:60px;
 }
 
 .timeline::before{
     content:'';
     position:absolute;
-    top:20px;
-    left:5%;
-    width:90%;
+    top:8px;
+    left:50%;
+    transform:translateX(-50%);
+    width:85%;
     height:2px;
     background:rgba(255,255,255,0.15);
 }
