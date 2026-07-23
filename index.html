@@ -30,8 +30,8 @@
       --serif: Cinzel, Georgia, serif;
       --sans: Inter, system-ui, sans-serif;
       --max: 1100px;
-      --beam-x: 54%;
-      --beam-y: 12.5%;
+      --beam-x: 50%;
+      --beam-y: 20.5%;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -248,19 +248,18 @@
       position: relative;
       display: inline-block;
       margin-bottom: 2rem;
-      isolation: isolate;
     }
 
     .logo {
       position: relative;
-      z-index: 3;
+      z-index: 1;
       width: min(560px, 82vw);
       display: block;
       user-select: none;
       pointer-events: none;
     }
 
-    /* Lighthouse beam — rotates from lens point */
+    /* Lighthouse beam — anchored to lantern, sweeps in front */
     .lighthouse {
       position: absolute;
       top: var(--beam-y);
@@ -269,6 +268,7 @@
       height: 0;
       z-index: 2;
       pointer-events: none;
+      mix-blend-mode: screen;
     }
 
     .beam-rotate {
@@ -276,7 +276,7 @@
       left: 0;
       top: 0;
       transform-origin: 0 0;
-      animation: lighthouseSweep 7s linear infinite;
+      animation: lighthouseSweep 8s linear infinite;
     }
 
     .beam-glow,
@@ -285,47 +285,48 @@
       left: 0;
       top: 0;
       transform-origin: 0 0;
-      clip-path: polygon(0 50%, 100% 0, 100% 100%);
+      /* narrow cone ~18° — reads as a lighthouse beam, not a wide cone */
+      clip-path: polygon(0 50%, 100% 44%, 100% 56%);
     }
 
     .beam-glow {
-      width: min(62vw, 520px);
-      height: clamp(90px, 18vw, 160px);
-      margin-top: calc(clamp(90px, 18vw, 160px) * -0.5);
+      width: min(50vw, 440px);
+      height: clamp(48px, 9vw, 72px);
+      margin-top: calc(clamp(48px, 9vw, 72px) * -0.5);
       background: linear-gradient(
         90deg,
-        rgba(147, 197, 253, 0.55) 0%,
-        rgba(96, 165, 250, 0.18) 35%,
-        transparent 72%
+        rgba(255, 255, 255, 0.7) 0%,
+        rgba(147, 197, 253, 0.28) 30%,
+        transparent 75%
       );
-      filter: blur(22px);
-      opacity: 0.85;
+      filter: blur(10px);
+      opacity: 0.9;
     }
 
     .beam-core {
-      width: min(48vw, 400px);
-      height: clamp(56px, 11vw, 96px);
-      margin-top: calc(clamp(56px, 11vw, 96px) * -0.5);
+      width: min(38vw, 320px);
+      height: clamp(28px, 5vw, 44px);
+      margin-top: calc(clamp(28px, 5vw, 44px) * -0.5);
       background: linear-gradient(
         90deg,
-        rgba(255, 255, 255, 0.92) 0%,
-        rgba(200, 230, 255, 0.45) 18%,
-        rgba(120, 180, 255, 0.12) 55%,
-        transparent 100%
+        rgba(255, 255, 255, 0.95) 0%,
+        rgba(220, 240, 255, 0.5) 22%,
+        transparent 70%
       );
-      filter: blur(1.5px);
+      filter: blur(0.5px);
     }
 
     .beam-hotspot {
       position: absolute;
-      left: -6px;
-      top: -6px;
-      width: 12px;
-      height: 12px;
+      left: -5px;
+      top: -5px;
+      width: 10px;
+      height: 10px;
       border-radius: 50%;
-      background: radial-gradient(circle, #fff 0%, rgba(147, 197, 253, 0.8) 45%, transparent 70%);
-      box-shadow: 0 0 16px rgba(255, 255, 255, 0.9), 0 0 32px rgba(77, 163, 255, 0.6);
+      background: radial-gradient(circle, #fff 0%, rgba(147, 197, 253, 0.85) 50%, transparent 72%);
+      box-shadow: 0 0 12px rgba(255, 255, 255, 0.95), 0 0 24px rgba(77, 163, 255, 0.55);
       animation: hotspotPulse 2.4s ease-in-out infinite;
+      z-index: 1;
     }
 
     @keyframes lighthouseSweep {
@@ -699,8 +700,8 @@
 
     @media (max-width: 768px) {
       :root {
-        --beam-x: 53.5%;
-        --beam-y: 11.8%;
+        --beam-x: 50%;
+        --beam-y: 20.5%;
       }
 
       .timeline::before { display: none; }
@@ -755,6 +756,7 @@
   <p class="hero-label" data-i18n="heroLabel">AI Maritime Navigation</p>
 
   <div class="logo-wrapper">
+    <img src="visus-logo.png" class="logo" alt="VISUS AI Navigation">
     <div class="lighthouse" aria-hidden="true">
       <div class="beam-hotspot"></div>
       <div class="beam-rotate">
@@ -762,7 +764,6 @@
         <div class="beam-core"></div>
       </div>
     </div>
-    <img src="visus-logo.png" class="logo" alt="VISUS AI Navigation">
   </div>
 
   <h1 class="tagline" data-i18n="tagline">Helping Skippers See Beyond The Horizon</h1>
