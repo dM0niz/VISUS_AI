@@ -1,497 +1,989 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>VISUS AI Navigation</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-
-<style>
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
-
-body{
-    background:#01040b;
-    color:white;
-    font-family:'Inter',sans-serif;
-    overflow-x:hidden;
-}
-
-.hero{
-    min-height:100vh;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    text-align:center;
-    position:relative;
-    padding:40px 20px;
-}
-
-.logo-wrapper{
-    position:relative;
-    display:inline-block;
-    margin-bottom:40px;
-}
-
-.logo{
-    width:min(600px,80vw);
-    display:block;
-}
-
-/* FEIXE DE LUZ */
-
-.beam {
-    position:absolute;
-    top:17%;
-    left:54%;
-
-    width:260px;
-    height:140px;
-
-    clip-path: polygon(0 45%, 100% 0%, 100% 100%);
-
-    background:linear-gradient(
-        90deg,
-        rgba(255,255,255,0.7),
-        rgba(180,220,255,0.2),
-        transparent
-    );
-
-    filter:blur(8px);
-
-    animation:sweep 8s ease-in-out infinite;
-
-    transform-origin:left center;
-
-    animation:sweep 8s ease-in-out infinite;
-
-    pointer-events:none;
-}
-
-@keyframes sweep{
-
-0%{
-    transform:rotate(-7deg);
-}
-
-50%{
-    transform:rotate(7deg);
-}
-
-100%{
-    transform:rotate(-7deg);
-}
-
-}
-    
-
-.tagline{
-    font-family:'Cinzel',serif;
-    font-size:clamp(1.3rem,2vw,2rem);
-    letter-spacing:2px;
-    color:#c8d9ff;
-    margin-bottom:25px;
-}
-
-.description{
-    max-width:700px;
-    line-height:1.8;
-    color:#d0d8e6;
-    margin-bottom:40px;
-    font-size:1.05rem;
-}
-
-.buttons{
-    display:flex;
-    gap:20px;
-    flex-wrap:wrap;
-    justify-content:center;
-}
-
-.btn{
-    text-decoration:none;
-    padding:16px 34px;
-    border-radius:40px;
-    transition:0.3s;
-    font-weight:500;
-}
-
-.primary{
-    background:#3a8dff;
-    color:white;
-}
-
-.secondary{
-    border:1px solid rgba(255,255,255,0.2);
-    color:white;
-}
-
-.btn:hover{
-    transform:translateY(-2px);
-}
-
-.info{
-    max-width:1000px;
-    margin:auto;
-    padding:100px 30px;
-}
-
-.info h2{
-    font-family:'Cinzel',serif;
-    margin-bottom:30px;
-    text-align:center;
-    letter-spacing:2px;
-}
-
-#star-network{
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    pointer-events:none;
-    z-index:-1;
-}
-
-.star{
-    position:absolute;
-    width:3px;
-    height:3px;
-    border-radius:50%;
-    background:#d7e9ff;
-    box-shadow:0 0 8px #8bc6ff;
-    animation:twinkle 4s infinite;
-}
-
-.line{
-    position:absolute;
-    height:1px;
-    background:rgba(120,180,255,0.15);
-    transform-origin:left center;
-}
-
-@keyframes twinkle{
-
-0%,100%{
-    opacity:0.15;
-    transform:scale(1);
-}
-
-50%{
-    opacity:1;
-    transform:scale(1.8);
-}
-
-}
-.features{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-    gap:25px;
-}
-
-.feature{
-    padding:30px;
-    border:1px solid rgba(255,255,255,0.08);
-    border-radius:18px;
-    background:rgba(255,255,255,0.02);
-}
-
-.feature h3{
-    margin-bottom:15px;
-    color:#9dc3ff;
-}
-
-footer{
-    text-align:center;
-    padding:40px;
-    color:#7c8ba7;
-    border-top:1px solid rgba(255,255,255,0.06);
-}
-    
-.roadmap{
-    max-width:1000px;
-    margin:100px auto;
-    padding:20px;
-    text-align:center;
-}
-
-.roadmap-title{
-    text-align:center;
-    font-family:'Cinzel', serif;
-    font-size:2rem;
-    margin-bottom:80px;
-    letter-spacing:3px;
-}
-
-.timeline{
-    display:flex;
-    justify-content:center;
-    align-items:flex-start;
-    gap:100px;
-    margin:60px auto;
-    position:relative;
-    margin-top:60px;
-}
-
-.timeline::before{
-    content:'';
-    position:absolute;
-    top:8px;
-    left:50%;
-    transform:translateX(-50%);
-    width:85%;
-    height:2px;
-    background:rgba(255,255,255,0.15);
-}
-
-.step{
-    position:relative;
-    text-align:center;
-    width:120%;
-}
-
-.circle{
-    width:20px;
-    height:20px;
-    border-radius:50%;
-    margin:auto;
-    margin-bottom:15px;
-    border:2px solid #4da3ff;
-    background:#02101d;
-}
-
-.done{
-    background:#4da3ff;
-    box-shadow:0 0 15px rgba(77,163,255,0.8);
-}
-
-@media (max-width: 768px){
-
-.logo{
-    width:85vw;
-}
-
-.beam{
-    width:140px;
-    height:70px;
-    top:23%;
-    left:53%;
-}
-.timeline{
-    flex-direction:column;
-    align-items:center;
-    gap:40px;
-}
-
-.timeline::before{
-    display:none;
-}
-
-.step{
-    width:100%;
-    max-width:250px;
-}
-
-}
-.hero{
-    position:relative;
-    z-index:10;
-}
-
-.info{
-    position:relative;
-    z-index:10;
-}
-
-.roadmap{
-    position:relative;
-    z-index:10;
-}
-}
-
-</style>
-</head>
-
-<body>
-
-<section class="hero">
-
-<div class="logo-wrapper">
-
-<img src="visus-logo.png" class="logo" alt="VISUS AI">
-
-<div class="beam"></div>
-
-</div>
-
-<div class="tagline">
-Helping Skippers See Beyond The Horizon
-</div>
-
-<div class="description">
-VISUS AI is an intelligent maritime navigation platform designed to enhance situational awareness and decision-making through advanced artificial intelligence models.
-</div>
-
-<div class="buttons">
-
-<a href="VISUS.apk" class="btn primary">
-Download Android APK
-</a>
-
-<a href="https://app.visusainav.com" class="btn secondary">
-Launch Web App
-</a>
-
-</div>
-
-</section>
-
-<section class="info">
-
-<h2>Navigation Intelligence</h2>
-
-<div class="features">
-
-<div class="feature">
-<h3>AI Navigation</h3>
-<p>Advanced navigation assistance powered by artificial intelligence.</p>
-</div>
-
-<div class="feature">
-<h3>Intelligent Models</h3>
-<p>AI models designed to improve route awareness and support decision-making.</p>
-</div>
-
-<div class="feature">
-<h3>Situational Awareness</h3>
-<p>Helping mariners make safer and smarter decisions at sea.</p>
-</div>
-
-<section class="roadmap">
-
-<h2 class="roadmap-title">
-ROADMAP
-</h2>
-
-<div class="timeline">
-
-<div class="step">
-<div class="circle done"></div>
-<p>VISUS AI Navigation</p>
-</div>
-
-<div class="step">
-<div class="circle done"></div>
-<p>AI Models</p>
-</div>
-
-<div class="step">
-<div class="circle"></div>
-<p>Computer Vision</p>
-</div>
-
-<div class="step">
-<div class="circle"></div>
-<p>VISUS AI Pro</p>
-</div>
-
-<div class="step">
-<div class="circle"></div>
-<p>Maritime Intelligence</p>
-</div>
-
-</div>
-
-</section>
-
-</div>
-
-
-
-</section>
-
-
-<footer>
-Powered by FrontSea Intelligence
-</footer>
-    
-<div id="star-network"></div>
-
-<script>
-
-const container = document.getElementById('star-network');
-
-const stars = [
-    {x:15,y:20},
-    {x:22,y:26},
-    {x:30,y:18},
-    {x:40,y:30},
-    {x:48,y:24},
-    {x:58,y:35},
-    {x:68,y:22},
-    {x:78,y:32},
-    {x:88,y:18},
-
-    {x:20,y:55},
-    {x:35,y:62},
-    {x:52,y:58},
-    {x:70,y:66},
-    {x:85,y:55}
-];
-
-stars.forEach((s,i)=>{
-
-const star=document.createElement('div');
-
-star.className='star';
-
-star.style.left=s.x+'vw';
-star.style.top=s.y+'vh';
-
-star.style.animationDelay=
-    (Math.random()*5)+'s';
-
-container.appendChild(star);
-
-if(i<stars.length-1){
-
-    const next=stars[i+1];
-
-    const dx=(next.x-s.x);
-    const dy=(next.y-s.y);
-
-    const length=Math.sqrt(dx*dx+dy*dy);
-
-    const angle=
-        Math.atan2(dy,dx)*180/Math.PI;
-
-    const line=document.createElement('div');
-
-    line.className='line';
-
-    line.style.left=s.x+'vw';
-    line.style.top=s.y+'vh';
-
-    line.style.width=length+'vw';
-
-    line.style.transform=
-        `rotate(${angle}deg)`;
-
-    container.appendChild(line);
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VISUS AI Navigation</title>
+  <meta name="description" content="Intelligent maritime navigation with AI models, YOLO computer vision, maps and FrontSea Intelligence Hub integration.">
+  <meta name="theme-color" content="#01040b">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="VISUS AI Navigation">
+  <meta property="og:description" content="Helping skippers see beyond the horizon — AI navigation, YOLO vision and the FrontSea ecosystem.">
+  <meta property="og:image" content="visus-logo.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="VISUS AI">
+  <link rel="apple-touch-icon" href="visus-logo.png">
+  <link rel="manifest" href="manifest.json">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #01040b;
+      --text: #f0f6ff;
+      --muted: rgba(200, 217, 255, 0.72);
+      --soft: rgba(208, 216, 230, 0.92);
+      --blue: #4da3ff;
+      --blue-glow: rgba(77, 163, 255, 0.35);
+      --border: rgba(255, 255, 255, 0.08);
+      --glass: rgba(255, 255, 255, 0.03);
+      --serif: Cinzel, Georgia, serif;
+      --sans: Inter, system-ui, sans-serif;
+      --max: 1100px;
+      --beam-x: 54%;
+      --beam-y: 12.5%;
     }
 
-});
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+    html { scroll-behavior: smooth; }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      overflow-x: hidden;
+      line-height: 1.65;
+    }
+
+    .skip {
+      position: absolute;
+      left: -9999px;
+      top: 0;
+      z-index: 9999;
+      padding: 0.75rem 1rem;
+      background: var(--blue);
+      color: #000;
+    }
+    .skip:focus { left: 1rem; top: 1rem; }
+
+    /* Background layers */
+    .bg-stack {
+      position: fixed;
+      inset: 0;
+      z-index: -3;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .bg-aurora {
+      position: absolute;
+      inset: -20% -10%;
+      background:
+        radial-gradient(ellipse 55% 40% at 20% 15%, rgba(59, 130, 246, 0.14), transparent 55%),
+        radial-gradient(ellipse 45% 35% at 85% 25%, rgba(96, 165, 250, 0.1), transparent 50%),
+        radial-gradient(ellipse 70% 50% at 50% 100%, rgba(15, 40, 80, 0.45), transparent 60%);
+      animation: auroraDrift 22s ease-in-out infinite alternate;
+    }
+
+    @keyframes auroraDrift {
+      0% { transform: translate3d(0, 0, 0) scale(1); opacity: 0.85; }
+      100% { transform: translate3d(2%, -1%, 0) scale(1.04); opacity: 1; }
+    }
+
+    .bg-horizon {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 42vh;
+      background: linear-gradient(to top, rgba(2, 16, 29, 0.55) 0%, transparent 100%);
+    }
+
+    #star-network {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      pointer-events: none;
+    }
+
+    .star {
+      position: absolute;
+      border-radius: 50%;
+      background: #d7e9ff;
+      box-shadow: 0 0 6px #8bc6ff;
+      animation: twinkle var(--twinkle-dur, 4s) ease-in-out infinite;
+      animation-delay: var(--twinkle-delay, 0s);
+    }
+
+    .star.far {
+      width: 2px;
+      height: 2px;
+      opacity: 0.35;
+      box-shadow: 0 0 4px rgba(139, 198, 255, 0.5);
+    }
+
+    .star.near {
+      width: 3px;
+      height: 3px;
+    }
+
+    .star.bright {
+      width: 4px;
+      height: 4px;
+      box-shadow: 0 0 12px rgba(147, 197, 253, 0.9), 0 0 24px rgba(77, 163, 255, 0.35);
+    }
+
+    .line {
+      position: absolute;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(120, 180, 255, 0.22), rgba(120, 180, 255, 0.04));
+      transform-origin: left center;
+      animation: linePulse 6s ease-in-out infinite;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.2; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.6); }
+    }
+
+    @keyframes linePulse {
+      0%, 100% { opacity: 0.35; }
+      50% { opacity: 0.85; }
+    }
+
+    /* Nav */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.85rem clamp(1rem, 4vw, 2rem);
+      background: rgba(1, 4, 11, 0.72);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      text-decoration: none;
+      color: var(--text);
+    }
+
+    .nav-brand img {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      object-fit: cover;
+    }
+
+    .nav-brand span {
+      font-family: var(--serif);
+      font-size: 0.85rem;
+      letter-spacing: 0.14em;
+    }
+
+    .nav-links {
+      display: none;
+      gap: 1.2rem;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.78rem;
+      letter-spacing: 0.04em;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .lang a {
+      color: var(--blue);
+      text-decoration: none;
+      font-size: 0.78rem;
+      margin: 0 2px;
+      opacity: 0.65;
+    }
+
+    .lang a.active { opacity: 1; font-weight: 600; color: var(--text); }
+
+    @media (min-width: 860px) {
+      .nav-links { display: flex; }
+    }
+
+    /* Hero */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+      padding: 6rem 1.25rem 3rem;
+    }
+
+    .hero-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 1.5rem;
+    }
+
+    .logo-wrapper {
+      position: relative;
+      display: inline-block;
+      margin-bottom: 2rem;
+      isolation: isolate;
+    }
+
+    .logo {
+      position: relative;
+      z-index: 3;
+      width: min(560px, 82vw);
+      display: block;
+      user-select: none;
+      pointer-events: none;
+    }
+
+    /* Lighthouse beam — rotates from lens point */
+    .lighthouse {
+      position: absolute;
+      top: var(--beam-y);
+      left: var(--beam-x);
+      width: 0;
+      height: 0;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .beam-rotate {
+      position: absolute;
+      left: 0;
+      top: 0;
+      transform-origin: 0 0;
+      animation: lighthouseSweep 7s linear infinite;
+    }
+
+    .beam-glow,
+    .beam-core {
+      position: absolute;
+      left: 0;
+      top: 0;
+      transform-origin: 0 0;
+      clip-path: polygon(0 50%, 100% 0, 100% 100%);
+    }
+
+    .beam-glow {
+      width: min(62vw, 520px);
+      height: clamp(90px, 18vw, 160px);
+      margin-top: calc(clamp(90px, 18vw, 160px) * -0.5);
+      background: linear-gradient(
+        90deg,
+        rgba(147, 197, 253, 0.55) 0%,
+        rgba(96, 165, 250, 0.18) 35%,
+        transparent 72%
+      );
+      filter: blur(22px);
+      opacity: 0.85;
+    }
+
+    .beam-core {
+      width: min(48vw, 400px);
+      height: clamp(56px, 11vw, 96px);
+      margin-top: calc(clamp(56px, 11vw, 96px) * -0.5);
+      background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.92) 0%,
+        rgba(200, 230, 255, 0.45) 18%,
+        rgba(120, 180, 255, 0.12) 55%,
+        transparent 100%
+      );
+      filter: blur(1.5px);
+    }
+
+    .beam-hotspot {
+      position: absolute;
+      left: -6px;
+      top: -6px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #fff 0%, rgba(147, 197, 253, 0.8) 45%, transparent 70%);
+      box-shadow: 0 0 16px rgba(255, 255, 255, 0.9), 0 0 32px rgba(77, 163, 255, 0.6);
+      animation: hotspotPulse 2.4s ease-in-out infinite;
+    }
+
+    @keyframes lighthouseSweep {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes hotspotPulse {
+      0%, 100% { opacity: 0.75; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.15); }
+    }
+
+    .tagline {
+      font-family: var(--serif);
+      font-size: clamp(1.25rem, 2.4vw, 2rem);
+      letter-spacing: 0.06em;
+      color: #c8d9ff;
+      margin-bottom: 1.25rem;
+    }
+
+    .description {
+      max-width: 720px;
+      line-height: 1.85;
+      color: var(--soft);
+      margin-bottom: 2rem;
+      font-size: clamp(0.98rem, 1.8vw, 1.08rem);
+    }
+
+    .hero-note {
+      max-width: 560px;
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-bottom: 2rem;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 0.75rem;
+    }
+
+    .btn {
+      text-decoration: none;
+      padding: 0.95rem 1.75rem;
+      border-radius: 999px;
+      transition: transform 0.25s, box-shadow 0.25s, background 0.25s;
+      font-weight: 500;
+      font-size: 0.92rem;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #3a8dff, #2563eb);
+      color: #fff;
+      box-shadow: 0 0 28px rgba(58, 141, 255, 0.35);
+    }
+
+    .btn-secondary {
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      color: #fff;
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .btn-ghost {
+      border: 1px solid rgba(77, 163, 255, 0.35);
+      color: #c8d9ff;
+      background: transparent;
+    }
+
+    .btn:hover { transform: translateY(-2px); }
+
+    .btn-primary:hover { box-shadow: 0 0 36px rgba(58, 141, 255, 0.5); }
+
+    /* Sections */
+    .container {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 clamp(1.1rem, 4vw, 2rem);
+    }
+
+    section {
+      position: relative;
+      z-index: 1;
+      padding: clamp(4rem, 8vw, 6rem) 0;
+    }
+
+    section + section { border-top: 1px solid var(--border); }
+
+    .label {
+      display: inline-block;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 0.75rem;
+    }
+
+    .section-title {
+      font-family: var(--serif);
+      font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+      letter-spacing: 0.05em;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    .section-lead {
+      max-width: 680px;
+      margin: 0 auto 2.5rem;
+      text-align: center;
+      color: var(--soft);
+      line-height: 1.8;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .feature {
+      padding: 1.6rem;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      background: var(--glass);
+      transition: border-color 0.25s, transform 0.25s;
+    }
+
+    .feature:hover {
+      border-color: rgba(77, 163, 255, 0.28);
+      transform: translateY(-2px);
+    }
+
+    .feature h3 {
+      margin-bottom: 0.65rem;
+      color: #9dc3ff;
+      font-size: 1rem;
+    }
+
+    .feature p {
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.7;
+    }
+
+    /* Tiers */
+    .tiers {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+
+    .tier {
+      padding: 2rem 1.75rem;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      background: var(--glass);
+      position: relative;
+    }
+
+    .tier.pro {
+      border-color: rgba(77, 163, 255, 0.35);
+      background: linear-gradient(165deg, rgba(59, 130, 246, 0.1), rgba(255, 255, 255, 0.02));
+      box-shadow: 0 0 40px rgba(77, 163, 255, 0.08);
+    }
+
+    .tier-badge {
+      display: inline-block;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.65rem;
+      border-radius: 999px;
+      margin-bottom: 1rem;
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--muted);
+    }
+
+    .tier.pro .tier-badge {
+      background: rgba(77, 163, 255, 0.2);
+      color: #bfdbfe;
+    }
+
+    .tier h3 {
+      font-family: var(--serif);
+      font-size: 1.35rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .tier > p {
+      color: var(--muted);
+      font-size: 0.92rem;
+      margin-bottom: 1.25rem;
+      line-height: 1.7;
+    }
+
+    .tier ul {
+      list-style: none;
+      display: grid;
+      gap: 0.65rem;
+    }
+
+    .tier li {
+      font-size: 0.88rem;
+      color: var(--soft);
+      padding-left: 1.35rem;
+      position: relative;
+    }
+
+    .tier li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: var(--blue);
+      font-weight: 700;
+    }
+
+    /* Hub cards */
+    .hub-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .hub-card {
+      padding: 1.5rem;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      background: rgba(2, 16, 29, 0.45);
+    }
+
+    .hub-card h3 {
+      color: #9dc3ff;
+      font-size: 0.95rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .hub-card p {
+      color: var(--muted);
+      font-size: 0.88rem;
+      line-height: 1.65;
+    }
+
+    /* Download */
+    .download-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .store-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.15rem;
+      padding: 1rem 1.25rem;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.04);
+      text-decoration: none;
+      color: var(--text);
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .store-btn:hover {
+      border-color: rgba(77, 163, 255, 0.35);
+      transform: translateY(-2px);
+    }
+
+    .store-btn.disabled {
+      opacity: 0.72;
+      cursor: default;
+    }
+
+    .store-btn small {
+      font-size: 0.65rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .store-btn strong { font-size: 0.95rem; }
+
+    .soon-tag {
+      font-size: 0.62rem;
+      color: #eab308;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .install-notes {
+      max-width: 640px;
+      margin: 0 auto;
+      text-align: left;
+      color: var(--muted);
+      font-size: 0.86rem;
+      line-height: 1.75;
+    }
+
+    .install-notes p { margin-bottom: 0.5rem; }
+
+    /* Roadmap */
+    .roadmap-title {
+      font-family: var(--serif);
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      letter-spacing: 0.12em;
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .timeline {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: clamp(1.5rem, 6vw, 5rem);
+      position: relative;
+      flex-wrap: wrap;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      top: 9px;
+      left: 8%;
+      right: 8%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.18), transparent);
+    }
+
+    .step {
+      position: relative;
+      text-align: center;
+      min-width: 100px;
+      flex: 1;
+      max-width: 140px;
+    }
+
+    .circle {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      margin: 0 auto 0.75rem;
+      border: 2px solid var(--blue);
+      background: #02101d;
+    }
+
+    .circle.done {
+      background: var(--blue);
+      box-shadow: 0 0 16px var(--blue-glow);
+    }
+
+    .step p {
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    footer {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 2rem;
+      color: #7c8ba7;
+      border-top: 1px solid var(--border);
+      font-size: 0.85rem;
+    }
+
+    @media (max-width: 768px) {
+      :root {
+        --beam-x: 53.5%;
+        --beam-y: 11.8%;
+      }
+
+      .timeline::before { display: none; }
+
+      .step {
+        max-width: 100%;
+        width: 100%;
+      }
+
+      .timeline {
+        flex-direction: column;
+        align-items: center;
+        gap: 1.75rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<a class="skip" href="#main" data-i18n="skip">Skip to content</a>
+
+<div class="bg-stack" aria-hidden="true">
+  <div class="bg-aurora"></div>
+  <div class="bg-horizon"></div>
+</div>
+<div id="star-network" aria-hidden="true"></div>
+
+<nav class="nav">
+  <a class="nav-brand" href="#">
+    <img src="visus-logo.png" alt="">
+    <span>VISUS AI</span>
+  </a>
+  <div class="nav-links">
+    <a href="#features" data-i18n="navFeatures">Features</a>
+    <a href="#tiers" data-i18n="navTiers">Free & Pro</a>
+    <a href="#hub" data-i18n="navHub">Intelligence Hub</a>
+    <a href="#download" data-i18n="navDownload">Download</a>
+    <a href="#roadmap" data-i18n="navRoadmap">Roadmap</a>
+  </div>
+  <div class="nav-right">
+    <div class="lang">
+      <a href="#" data-lang="pt">PT</a>
+      <span aria-hidden="true">|</span>
+      <a href="#" data-lang="en" class="active">EN</a>
+    </div>
+  </div>
+</nav>
+
+<main id="main">
+
+<section class="hero">
+  <p class="hero-label" data-i18n="heroLabel">AI Maritime Navigation</p>
+
+  <div class="logo-wrapper">
+    <div class="lighthouse" aria-hidden="true">
+      <div class="beam-hotspot"></div>
+      <div class="beam-rotate">
+        <div class="beam-glow"></div>
+        <div class="beam-core"></div>
+      </div>
+    </div>
+    <img src="visus-logo.png" class="logo" alt="VISUS AI Navigation">
+  </div>
+
+  <h1 class="tagline" data-i18n="tagline">Helping Skippers See Beyond The Horizon</h1>
+
+  <p class="description" data-i18n="description">
+    VISUS AI is an intelligent maritime navigation platform that enhances situational awareness and decision-making through advanced AI models — on your boat, PC or iPad, with any camera you can attach to the vessel.
+  </p>
+
+  <p class="hero-note" data-i18n="heroNote">Works offline at sea. With internet, connects to the FrontSea Intelligence Hub.</p>
+
+  <div class="buttons">
+    <a href="VISUS.apk" class="btn btn-primary" data-i18n="btnApk">Download Android APK</a>
+    <a href="https://app.visusainav.com" class="btn btn-secondary" data-i18n="btnWeb">Launch Web App</a>
+    <a href="#tiers" class="btn btn-ghost" data-i18n="btnPro">Learn about Pro</a>
+  </div>
+</section>
+
+<section id="features">
+  <div class="container">
+    <h2 class="section-title" data-i18n="featuresTitle">Navigation Intelligence</h2>
+    <div class="features">
+      <article class="feature">
+        <h3 data-i18n="f1t">AI Navigation</h3>
+        <p data-i18n="f1d">Advanced route and decision assistance powered by maritime navigation models trained for real conditions.</p>
+      </article>
+      <article class="feature">
+        <h3 data-i18n="f2t">Computer Vision (Pro)</h3>
+        <p data-i18n="f2d">YOLO models detect obstacles, vessels, buoys and environmental conditions in real time from your boat camera.</p>
+      </article>
+      <article class="feature">
+        <h3 data-i18n="f3t">Situational Awareness</h3>
+        <p data-i18n="f3d">Maps, AIS and environmental models combined for safer, smarter decisions at sea.</p>
+      </article>
+      <article class="feature">
+        <h3 data-i18n="f4t">Any Camera, Any Screen</h3>
+        <p data-i18n="f4d">Use a built-in camera, USB/IP camera on the boat, an onboard PC or an iPad — VISUS adapts to your helm.</p>
+      </article>
+      <article class="feature">
+        <h3 data-i18n="f5t">Environmental Models</h3>
+        <p data-i18n="f5d">Environmental AI analyses sea state, weather and visibility to enrich every navigation decision.</p>
+      </article>
+      <article class="feature">
+        <h3 data-i18n="f6t">FrontSea Hub (online)</h3>
+        <p data-i18n="f6d">With an internet connection, reports and alerts are shared with other users through the FrontSea Intelligence Hub.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="tiers">
+  <div class="container">
+    <p class="label" style="text-align:center;display:block" data-i18n="tiersLabel">Choose your plan</p>
+    <h2 class="section-title" data-i18n="tiersTitle">Free & Pro</h2>
+    <p class="section-lead" data-i18n="tiersLead">Start with smart navigation and maps. Upgrade to YOLO vision, full environmental models and Azure AI Weather included.</p>
+    <div class="tiers">
+      <article class="tier">
+        <span class="tier-badge" data-i18n="freeBadge">Free</span>
+        <h3 data-i18n="freeTitle">VISUS Free</h3>
+        <p data-i18n="freeDesc">Simple navigation with maps, AIS and AI navigation models — no YOLO, no live camera.</p>
+        <ul>
+          <li data-i18n="free1">Maps and AI-assisted navigation</li>
+          <li data-i18n="free2">Maritime navigation AI models</li>
+          <li data-i18n="free3">Works offline at sea</li>
+          <li data-i18n="free4">Web App, Android and iPad</li>
+        </ul>
+      </article>
+      <article class="tier pro">
+        <span class="tier-badge" data-i18n="proBadge">Pro</span>
+        <h3 data-i18n="proTitle">VISUS AI Pro</h3>
+        <p data-i18n="proDesc">Everything in the FrontSea ecosystem: YOLO, environmental models, online hub and Azure AI Weather Pro included.</p>
+        <ul>
+          <li data-i18n="pro1">Everything in Free, plus YOLO computer vision</li>
+          <li data-i18n="pro2">Real-time environmental and obstacle detection</li>
+          <li data-i18n="pro3">FrontSea Intelligence Hub — shared reports</li>
+          <li data-i18n="pro4">Azure AI Weather Pro included at no extra cost</li>
+          <li data-i18n="pro5">Live camera on boat, PC or iPad</li>
+        </ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="hub">
+  <div class="container">
+    <p class="label" style="text-align:center;display:block" data-i18n="hubLabel">Ecosystem</p>
+    <h2 class="section-title" data-i18n="hubTitle">FrontSea Intelligence Hub</h2>
+    <p class="section-lead" data-i18n="hubLead">When online, VISUS connects to the hub that aggregates observations, weather and maritime intelligence — notifying reports to other users and operators.</p>
+    <div class="hub-cards">
+      <article class="hub-card">
+        <h3 data-i18n="hub1t">Shared reports</h3>
+        <p data-i18n="hub1d">Alerts and observations reach other skippers and the FrontSea network.</p>
+      </article>
+      <article class="hub-card">
+        <h3 data-i18n="hub2t">Azure AI Weather</h3>
+        <p data-i18n="hub2d">Pro users receive the Azure AI Weather Pro app at no additional cost.</p>
+      </article>
+      <article class="hub-card">
+        <h3 data-i18n="hub3t">Unified ecosystem</h3>
+        <p data-i18n="hub3d">VISUS, Azure AI Weather and ARGUS AI Sentinel on one operational platform.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="download">
+  <div class="container">
+    <p class="label" style="text-align:center;display:block" data-i18n="dlLabel">Download</p>
+    <h2 class="section-title" data-i18n="dlTitle">Take VISUS to sea</h2>
+    <p class="section-lead" data-i18n="dlLead">Android via APK or Google Play. iPhone via Web App (PWA) — install to your home screen like a native app.</p>
+    <div class="download-grid">
+      <span class="store-btn disabled" aria-disabled="true">
+        <small data-i18n="dlPlaySmall">Get it on</small>
+        <strong data-i18n="dlPlaySoon">Google Play — Coming Soon</strong>
+        <span class="soon-tag" data-i18n="soonTag">Coming Soon</span>
+      </span>
+      <a href="VISUS.apk" class="store-btn">
+        <small>Android</small>
+        <strong data-i18n="dlApk">Android APK (direct)</strong>
+      </a>
+      <a href="https://app.visusainav.com" class="store-btn">
+        <small data-i18n="dlIosSmall">Install on</small>
+        <strong data-i18n="dlIos">iPhone — Web App (PWA)</strong>
+      </a>
+      <a href="https://app.visusainav.com" class="store-btn">
+        <small>Web</small>
+        <strong data-i18n="dlWeb">Open Web App</strong>
+      </a>
+    </div>
+    <div class="install-notes">
+      <p data-i18n="inst1">Android: download the APK or wait for the Google Play release.</p>
+      <p data-i18n="inst2">iPhone: open app.visusainav.com in Safari → Share → Add to Home Screen.</p>
+      <p data-i18n="inst3">PC/iPad: use the Web App in your browser or install as a PWA.</p>
+    </div>
+  </div>
+</section>
+
+<section id="roadmap">
+  <div class="container">
+    <h2 class="roadmap-title" data-i18n="roadmapTitle">ROADMAP</h2>
+    <div class="timeline">
+      <div class="step">
+        <div class="circle done"></div>
+        <p data-i18n="rm1">VISUS AI Navigation</p>
+      </div>
+      <div class="step">
+        <div class="circle done"></div>
+        <p data-i18n="rm2">AI Models</p>
+      </div>
+      <div class="step">
+        <div class="circle"></div>
+        <p data-i18n="rm3">Computer Vision</p>
+      </div>
+      <div class="step">
+        <div class="circle"></div>
+        <p data-i18n="rm4">VISUS AI Pro</p>
+      </div>
+      <div class="step">
+        <div class="circle"></div>
+        <p data-i18n="rm5">Maritime Intelligence</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer data-i18n="footer">Powered by FrontSea Intelligence</footer>
+
+<script>
+(function () {
+  var container = document.getElementById("star-network");
+
+  var stars = [
+    { x: 8, y: 12, tier: "far" },
+    { x: 15, y: 20, tier: "near" },
+    { x: 22, y: 26, tier: "far" },
+    { x: 30, y: 18, tier: "bright" },
+    { x: 40, y: 30, tier: "near" },
+    { x: 48, y: 24, tier: "far" },
+    { x: 58, y: 35, tier: "near" },
+    { x: 68, y: 22, tier: "bright" },
+    { x: 78, y: 32, tier: "near" },
+    { x: 88, y: 18, tier: "far" },
+    { x: 92, y: 42, tier: "near" },
+    { x: 20, y: 55, tier: "near" },
+    { x: 35, y: 62, tier: "far" },
+    { x: 52, y: 58, tier: "bright" },
+    { x: 70, y: 66, tier: "near" },
+    { x: 85, y: 55, tier: "far" },
+    { x: 12, y: 78, tier: "far" },
+    { x: 45, y: 82, tier: "near" },
+    { x: 62, y: 88, tier: "far" }
+  ];
+
+  stars.forEach(function (s, i) {
+    var star = document.createElement("div");
+    star.className = "star " + s.tier;
+    star.style.left = s.x + "vw";
+    star.style.top = s.y + "vh";
+    star.style.setProperty("--twinkle-dur", (3 + Math.random() * 4) + "s");
+    star.style.setProperty("--twinkle-delay", (Math.random() * 5) + "s");
+    container.appendChild(star);
+
+    if (i < stars.length - 1 && i % 2 === 0) {
+      var next = stars[i + 1];
+      var dx = next.x - s.x;
+      var dy = next.y - s.y;
+      var length = Math.sqrt(dx * dx + dy * dy);
+      var angle = Math.atan2(dy, dx) * 180 / Math.PI;
+      var line = document.createElement("div");
+      line.className = "line";
+      line.style.left = s.x + "vw";
+      line.style.top = s.y + "vh";
+      line.style.width = length + "vw";
+      line.style.transform = "rotate(" + angle + "deg)";
+      line.style.animationDelay = (Math.random() * 4) + "s";
+      container.appendChild(line);
+    }
+  });
+})();
 </script>
-    
+<script src="visus-i18n.js"></script>
 </body>
-    
 </html>
