@@ -248,27 +248,36 @@
       position: relative;
       display: inline-block;
       margin-bottom: 2rem;
+      --logo-size: min(560px, 82vw);
+      --beam-length: calc(var(--logo-size) * 0.34);
     }
 
     .logo {
       position: relative;
       z-index: 1;
-      width: min(560px, 82vw);
+      width: var(--logo-size);
       display: block;
       user-select: none;
       pointer-events: none;
     }
 
-    /* Lighthouse beam — anchored to lantern, sweeps in front */
+    /* Clip beam to upper sky/water — never washes over VISUS text */
+    .lighthouse-mask {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      overflow: hidden;
+      clip-path: polygon(0 0, 100% 0, 100% 46%, 0 46%);
+      pointer-events: none;
+    }
+
     .lighthouse {
       position: absolute;
       top: var(--beam-y);
       left: var(--beam-x);
       width: 0;
       height: 0;
-      z-index: 2;
       pointer-events: none;
-      mix-blend-mode: screen;
     }
 
     .beam-rotate {
@@ -276,7 +285,8 @@
       left: 0;
       top: 0;
       transform-origin: 0 0;
-      animation: lighthouseSweep 8s linear infinite;
+      transform: rotate(0deg);
+      animation: lighthouseSweep 4.8s ease-in-out infinite alternate;
     }
 
     .beam-glow,
@@ -285,53 +295,55 @@
       left: 0;
       top: 0;
       transform-origin: 0 0;
-      /* narrow cone ~18° — reads as a lighthouse beam, not a wide cone */
-      clip-path: polygon(0 50%, 100% 44%, 100% 56%);
+      /* wide soft cone — matches the baked-in logo beam */
+      clip-path: polygon(0 50%, 100% 12%, 100% 88%);
     }
 
     .beam-glow {
-      width: min(50vw, 440px);
-      height: clamp(48px, 9vw, 72px);
-      margin-top: calc(clamp(48px, 9vw, 72px) * -0.5);
+      width: calc(var(--beam-length) * 1.08);
+      height: calc(var(--beam-length) * 0.38);
+      margin-top: calc(var(--beam-length) * -0.19);
       background: linear-gradient(
         90deg,
-        rgba(255, 255, 255, 0.7) 0%,
-        rgba(147, 197, 253, 0.28) 30%,
-        transparent 75%
+        rgba(255, 255, 255, 0.82) 0%,
+        rgba(210, 232, 255, 0.45) 18%,
+        rgba(160, 205, 255, 0.18) 45%,
+        transparent 100%
       );
-      filter: blur(10px);
-      opacity: 0.9;
+      filter: blur(7px);
+      opacity: 0.88;
     }
 
     .beam-core {
-      width: min(38vw, 320px);
-      height: clamp(28px, 5vw, 44px);
-      margin-top: calc(clamp(28px, 5vw, 44px) * -0.5);
+      width: var(--beam-length);
+      height: calc(var(--beam-length) * 0.22);
+      margin-top: calc(var(--beam-length) * -0.11);
       background: linear-gradient(
         90deg,
-        rgba(255, 255, 255, 0.95) 0%,
-        rgba(220, 240, 255, 0.5) 22%,
-        transparent 70%
+        rgba(255, 255, 255, 0.92) 0%,
+        rgba(230, 244, 255, 0.55) 20%,
+        rgba(180, 215, 255, 0.12) 55%,
+        transparent 100%
       );
-      filter: blur(0.5px);
+      filter: blur(1px);
     }
 
     .beam-hotspot {
       position: absolute;
-      left: -5px;
-      top: -5px;
-      width: 10px;
-      height: 10px;
+      left: -4px;
+      top: -4px;
+      width: 8px;
+      height: 8px;
       border-radius: 50%;
-      background: radial-gradient(circle, #fff 0%, rgba(147, 197, 253, 0.85) 50%, transparent 72%);
-      box-shadow: 0 0 12px rgba(255, 255, 255, 0.95), 0 0 24px rgba(77, 163, 255, 0.55);
+      background: radial-gradient(circle, #fff 0%, rgba(200, 230, 255, 0.7) 55%, transparent 75%);
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.9), 0 0 20px rgba(140, 190, 255, 0.45);
       animation: hotspotPulse 2.4s ease-in-out infinite;
-      z-index: 1;
     }
 
+    /* Real lighthouse: sweeps left ↔ right, not a full clock rotation */
     @keyframes lighthouseSweep {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
+      from { transform: rotate(-34deg); }
+      to   { transform: rotate(34deg); }
     }
 
     @keyframes hotspotPulse {
@@ -757,11 +769,13 @@
 
   <div class="logo-wrapper">
     <img src="visus-logo.png" class="logo" alt="VISUS AI Navigation">
-    <div class="lighthouse" aria-hidden="true">
-      <div class="beam-hotspot"></div>
-      <div class="beam-rotate">
-        <div class="beam-glow"></div>
-        <div class="beam-core"></div>
+    <div class="lighthouse-mask" aria-hidden="true">
+      <div class="lighthouse">
+        <div class="beam-hotspot"></div>
+        <div class="beam-rotate">
+          <div class="beam-glow"></div>
+          <div class="beam-core"></div>
+        </div>
       </div>
     </div>
   </div>
