@@ -31,7 +31,8 @@
       --sans: Inter, system-ui, sans-serif;
       --max: 1100px;
       --beam-x: 50%;
-      --beam-y: 20.5%;
+      --beam-y: 22.4%;
+      --beam-tilt: 4deg;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -249,7 +250,7 @@
       display: inline-block;
       margin-bottom: 2rem;
       --logo-size: min(560px, 82vw);
-      --beam-length: calc(var(--logo-size) * 0.34);
+      --beam-length: calc(var(--logo-size) * 0.32);
     }
 
     .logo {
@@ -266,8 +267,7 @@
       position: absolute;
       inset: 0;
       z-index: 2;
-      overflow: hidden;
-      clip-path: polygon(0 0, 100% 0, 100% 46%, 0 46%);
+      overflow: visible;
       pointer-events: none;
     }
 
@@ -277,6 +277,7 @@
       left: var(--beam-x);
       width: 0;
       height: 0;
+      transform: translate(-50%, -50%);
       pointer-events: none;
     }
 
@@ -285,8 +286,7 @@
       left: 0;
       top: 0;
       transform-origin: 0 0;
-      transform: rotate(0deg);
-      animation: lighthouseSweep 4.8s ease-in-out infinite alternate;
+      will-change: transform;
     }
 
     .beam-glow,
@@ -330,20 +330,15 @@
 
     .beam-hotspot {
       position: absolute;
-      left: -4px;
-      top: -4px;
-      width: 8px;
-      height: 8px;
+      left: 0;
+      top: 0;
+      width: 7px;
+      height: 7px;
+      transform: translate(-50%, -50%);
       border-radius: 50%;
-      background: radial-gradient(circle, #fff 0%, rgba(200, 230, 255, 0.7) 55%, transparent 75%);
-      box-shadow: 0 0 10px rgba(255, 255, 255, 0.9), 0 0 20px rgba(140, 190, 255, 0.45);
+      background: radial-gradient(circle, #fff 0%, rgba(210, 235, 255, 0.75) 50%, transparent 72%);
+      box-shadow: 0 0 8px rgba(255, 255, 255, 0.95), 0 0 18px rgba(140, 190, 255, 0.5);
       animation: hotspotPulse 2.4s ease-in-out infinite;
-    }
-
-    /* Real lighthouse: sweeps left ↔ right, not a full clock rotation */
-    @keyframes lighthouseSweep {
-      from { transform: rotate(-34deg); }
-      to   { transform: rotate(34deg); }
     }
 
     @keyframes hotspotPulse {
@@ -713,7 +708,7 @@
     @media (max-width: 768px) {
       :root {
         --beam-x: 50%;
-        --beam-y: 20.5%;
+        --beam-y: 22.4%;
       }
 
       .timeline::before { display: none; }
@@ -997,6 +992,29 @@
       container.appendChild(line);
     }
   });
+})();
+
+(function () {
+  var beam = document.querySelector(".beam-rotate");
+  if (!beam) return;
+
+  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var tilt = getComputedStyle(document.documentElement).getPropertyValue("--beam-tilt").trim() || "4deg";
+  var start = performance.now();
+  var period = 5200;
+
+  function frame(now) {
+    if (reduced) {
+      beam.style.transform = "rotate(" + tilt + ") scaleX(1)";
+      return;
+    }
+    var t = (now - start) / period;
+    var swing = Math.sin(t * Math.PI * 2);
+    beam.style.transform = "rotate(" + tilt + ") scaleX(" + swing.toFixed(4) + ")";
+    requestAnimationFrame(frame);
+  }
+
+  requestAnimationFrame(frame);
 })();
 </script>
 <script src="visus-i18n.js"></script>
