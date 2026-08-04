@@ -30,9 +30,10 @@
       --serif: Cinzel, Georgia, serif;
       --sans: Inter, system-ui, sans-serif;
       --max: 1100px;
-      --beam-x: 50%;
-      --beam-y: 28%;
       --beam-tilt: 4deg;
+      --lens-x: 0.500;
+      --lens-y: 0.228;
+      --beam-length-ratio: 0.32;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -247,38 +248,37 @@
 
     .logo-wrapper {
       position: relative;
-      display: inline-block;
-      margin-bottom: 2rem;
+      display: block;
+      width: var(--logo-size);
+      margin: 0 auto 2rem;
       --logo-size: min(560px, 82vw);
-      --beam-length: calc(var(--logo-size) * 0.32);
+    }
+
+    .logo-stage {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      --beam-length: calc(var(--logo-size) * var(--beam-length-ratio));
     }
 
     .logo {
       position: relative;
       z-index: 1;
-      width: var(--logo-size);
       display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: fill;
       user-select: none;
-      pointer-events: none;
-    }
-
-    /* Clip beam to upper sky/water — never washes over VISUS text */
-    .lighthouse-mask {
-      position: absolute;
-      inset: 0;
-      z-index: 2;
-      overflow: visible;
       pointer-events: none;
     }
 
     .lighthouse {
       position: absolute;
-      top: var(--beam-y);
-      left: var(--beam-x);
+      z-index: 2;
       width: 0;
       height: 0;
-      transform: translate(-50%, -50%);
       pointer-events: none;
+      /* left/top set in px by JS from --lens-x / --lens-y */
     }
 
     .beam-rotate {
@@ -300,9 +300,9 @@
     }
 
     .beam-glow {
-      width: calc(var(--beam-length) * 1.08);
-      height: calc(var(--beam-length) * 0.38);
-      margin-top: calc(var(--beam-length) * -0.19);
+      width: calc(var(--beam-length) * 1.06);
+      height: calc(var(--beam-length) * 0.34);
+      margin-top: calc(var(--beam-length) * -0.17);
       background: linear-gradient(
         90deg,
         rgba(255, 255, 255, 0.82) 0%,
@@ -342,8 +342,8 @@
     }
 
     @keyframes hotspotPulse {
-      0%, 100% { opacity: 0.75; transform: scale(1); }
-      50% { opacity: 1; transform: scale(1.15); }
+      0%, 100% { opacity: 0.75; }
+      50% { opacity: 1; }
     }
 
     .tagline {
@@ -707,8 +707,9 @@
 
     @media (max-width: 768px) {
       :root {
-        --beam-x: 50%;
-        --beam-y: 22.4%;
+        /* lantern sits slightly lower relative to box on narrow screens */
+        --lens-y: 0.234;
+        --beam-tilt: 3.5deg;
       }
 
       .timeline::before { display: none; }
@@ -763,9 +764,9 @@
   <p class="hero-label" data-i18n="heroLabel">AI Maritime Navigation</p>
 
   <div class="logo-wrapper">
-    <img src="visus-logo.png" class="logo" alt="VISUS AI Navigation">
-    <div class="lighthouse-mask" aria-hidden="true">
-      <div class="lighthouse">
+    <div class="logo-stage">
+      <img src="visus-logo.png" class="logo" alt="VISUS AI Navigation" width="1254" height="1254">
+      <div class="lighthouse" aria-hidden="true">
         <div class="beam-hotspot"></div>
         <div class="beam-rotate">
           <div class="beam-glow"></div>
@@ -996,24 +997,60 @@
 
 (function () {
   var beam = document.querySelector(".beam-rotate");
-  if (!beam) return;
+  var lighthouse = document.querySelector(".lighthouse");
+  var stage = document.querySelector(".logo-stage");
+  if (!beam || !lighthouse || !stage) return;
 
   var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  var tilt = getComputedStyle(document.documentElement).getPropertyValue("--beam-tilt").trim() || "4deg";
   var start = performance.now();
   var period = 5200;
 
+  function readLens() {
+    var s = getComputedStyle(document.documentElement);
+    return {
+      x: parseFloat(s.getPropertyValue("--lens-x")) || 0.5,
+      y: parseFloat(s.getPropertyValue("--lens-y")) || 0.228,
+      tilt: s.getPropertyValue("--beam-tilt").trim() || "4deg",
+      lenRatio: parseFloat(s.getPropertyValue("--beam-length-ratio")) || 0.32
+    };
+  }
+
+  function syncLensPosition() {
+    var lens = readLens();
+    var size = stage.clientWidth;
+    if (!size) return;
+    var beamLen = size * lens.lenRatio;
+    lighthouse.style.left = (size * lens.x) + "px";
+    lighthouse.style.top = (size * lens.y) + "px";
+    lighthouse.style.transform = "translate(-50%, -50%)";
+    stage.style.setProperty("--beam-length", beamLen + "px");
+  }
+
   function frame(now) {
+    var lens = readLens();
     if (reduced) {
-      beam.style.transform = "rotate(" + tilt + ") scaleX(1)";
+      beam.style.transform = "rotate(" + lens.tilt + ") scaleX(1)";
+      requestAnimationFrame(frame);
       return;
     }
-    var t = (now - start) / period;
-    var swing = Math.sin(t * Math.PI * 2);
-    beam.style.transform = "rotate(" + tilt + ") scaleX(" + swing.toFixed(4) + ")";
+    var swing = Math.sin(((now - start) / period) * Math.PI * 2);
+    var opacity = 0.35 + Math.abs(swing) * 0.65;
+    beam.style.transform = "rotate(" + lens.tilt + ") scaleX(" + swing.toFixed(4) + ")";
+    beam.style.opacity = opacity.toFixed(3);
     requestAnimationFrame(frame);
   }
 
+  syncLensPosition();
+  window.addEventListener("resize", syncLensPosition);
+  window.addEventListener("orientationchange", syncLensPosition);
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(syncLensPosition);
+  }
+  var img = stage.querySelector(".logo");
+  if (img) {
+    if (img.complete) syncLensPosition();
+    else img.addEventListener("load", syncLensPosition);
+  }
   requestAnimationFrame(frame);
 })();
 </script>
