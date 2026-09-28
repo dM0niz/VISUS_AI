@@ -32,7 +32,7 @@
       --max: 1100px;
       --beam-tilt: 4deg;
       --lens-x: 0.500;
-      --lens-y: 0.228;
+      --lens-y: 0.243;
       --beam-length-ratio: 0.32;
     }
 
@@ -708,7 +708,7 @@
     @media (max-width: 768px) {
       :root {
         /* lantern sits slightly lower relative to box on narrow screens */
-        --lens-y: 0.234;
+        --lens-y: 0.249;
         --beam-tilt: 3.5deg;
       }
 
@@ -1009,7 +1009,7 @@
     var s = getComputedStyle(document.documentElement);
     return {
       x: parseFloat(s.getPropertyValue("--lens-x")) || 0.5,
-      y: parseFloat(s.getPropertyValue("--lens-y")) || 0.228,
+      y: parseFloat(s.getPropertyValue("--lens-y")) || 0.243,
       tilt: s.getPropertyValue("--beam-tilt").trim() || "4deg",
       lenRatio: parseFloat(s.getPropertyValue("--beam-length-ratio")) || 0.32
     };
