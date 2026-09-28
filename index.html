@@ -33,7 +33,7 @@
       --beam-tilt: 4deg;
       --lens-x: 0.500;
       --lens-y: 0.258;
-      --beam-length-ratio: 0.32;
+      --beam-length-ratio: 0.40;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -296,13 +296,13 @@
       top: 0;
       transform-origin: 0 0;
       /* wide soft cone — matches the baked-in logo beam */
-      clip-path: polygon(0 50%, 100% 12%, 100% 88%);
+      clip-path: polygon(0 50%, 100% 5%, 100% 95%);
     }
 
     .beam-glow {
       width: calc(var(--beam-length) * 1.06);
-      height: calc(var(--beam-length) * 0.34);
-      margin-top: calc(var(--beam-length) * -0.17);
+      height: calc(var(--beam-length) * 0.42);
+      margin-top: calc(var(--beam-length) * -0.21);
       background: linear-gradient(
         90deg,
         rgba(255, 255, 255, 0.82) 0%,
@@ -316,8 +316,8 @@
 
     .beam-core {
       width: var(--beam-length);
-      height: calc(var(--beam-length) * 0.22);
-      margin-top: calc(var(--beam-length) * -0.11);
+      height: calc(var(--beam-length) * 0.28);
+      margin-top: calc(var(--beam-length) * -0.14);
       background: linear-gradient(
         90deg,
         rgba(255, 255, 255, 0.92) 0%,
